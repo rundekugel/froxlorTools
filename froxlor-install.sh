@@ -1,9 +1,14 @@
+#!/bin/bash
 
 echo try installing froxlor...
+
 apt update
 apt -y upgrade
 apt remove apache2
-apt -y install nginx php php-fpm php-mysql php-xml php-mbstring php-mbstring php-gd php-curl php-bcmath php-zip php-ldap mlocate
+apt -y install nginx screen mc git
+apt -y install php php-fpm php-mysql php-xml php-mbstring php-gd php-curl php-bcmath php-zip php-ldap php-cgi
+apt -y install mlocate
+apt -y install mariadb-client mariadb-server
 updatedb
 
 #get keys
@@ -21,103 +26,33 @@ apt update
 apt -y upgrade
 apt install froxlor
 
-exit 0
-
-mysql_secure_installation
-service nginx restart
-apt install mariadb-client
-apt install php-7.4
-apt install mariadb
-apt install mariadb-server
+echo secure database
 /usr/bin/mysql_secure_installation
+
+# -------------------------------------------------
+echo do manually:
+echo "mariadb : SET PASSWORD FOR 'root'@'localhost' = PASSWORD('new_password');"
+echo call http://<server-ip>/froxlor
+exit 0
+# -------------------------------------------------
+service nginx restart
+apt install php-7.4
 
 cat /usr/share/keyrings/deb.froxlor.org-froxlor.gpg 
 wget -O - https://deb.froxlor.org/froxlor.gpg | apt-key add -
-apt-get update && apt-get upgrade
-apt install froxlor
-ll
-cat trusted.gpg
-ll
-cat sources.list
-ll
-cat trusted.gpg.d/debian-archive-buster-stable.gpg 
-wget -O - https://deb.froxlor.org/froxlor.gpg
-mc
-screen
-cat pws/froxlor.txt 
-su gaul1
-service nginx restart
-cd /etc/nginx/
-ll
-cd sites-enabled/
-ll
+
+cd /etc/nginx/sites-enabled/
 ln -s ../sites-available/froxlor.conf 
 service nginx restart
-mc
-ll
-ll html/
-ll froxlor/
-service apache2 restart
-service nginx restart
-service nginx status
-service nginx test
-nginx test
-nginx -test
-nginx 
-nginx  -t
-service nginx restart
-netstat -pltn | grep 9000
-netstat -la
-netstat -ltu
-netstat -ltun
-systemctl list-unit-files | grep fpm
-systemctl -l | grep -i fpm
-systemctl -l 
-apt install php7-3-fpm
-apt install php7.3-fpm
-curl localhost
-curl f.localhost
-curl f.localhost/robots.txt
-curl f.localhost:robots.txt
-curl f.localhost/
-curl f.localhost/robots.txt
-ll
-curl f.localhost/phpcs.xml
-cat >test.html
-curl f.localhost/test
-curl f.localhost/test.html
-cat >test.html
-cat test.html 
-cat >test.html
-cat test.html 
-curl f.localhost/test.html
-service nginx restart
-curl f.localhost/test.html
-ll
-chown www-data:www-data
-chown www-data:www-data test.html 
-ll
-cat test.html 
-curl f.localhost/test.html
-curl localhost/test.html
-curl localhost
-service nginx restart
-less /etc/nginx/nginx.conf 
-less /etc/nginx/fastcgi_params 
-less /etc/init.d/php-fcgi 
+
 php /var/www/froxlor//install/scripts/config-services.php --froxlor-dir=/var/www/froxlor/ --create
-ll ..
-ll ../html/
-curl localhost
-cat ../html/index.html 
-ifconfig
-screen
-ls
-service nginx restart
-apt install fpm
-apt install php-fpm
-apt install php7.3-fpm
-ps -Aa
-less /etc/init.d/php-fcgi 
-systemctl restart php7.3-fpm
-ll
+
+sed -i -e 's|root /var/www/html|root /var/www/froxlor|g' /etc/nginx/sites-enabled/default --follow-symlinks
+sed -i -e 's/#location\location/g' /etc/nginx/sites-enabled/default --follow-symlinks
+sed -i -e 's|#location ~ \\.php|location ~ \\.php|g' /etc/nginx/sites-enabled/default --follow-symlinks
+sed -i -e 's|#\tinclude sni|\tinclude sni|g' /etc/nginx/sites-enabled/default --follow-symlinks
+sed -i -e 's|#\tfastcgi_pass unix|\tfastcgi_pass unix|g' /etc/nginx/sites-enabled/default --follow-symlinks
+sed -i -z -e 's|9000;\n\t#|9000;\n\t|g' /etc/nginx/sites-enabled/default --follow-symlinks
+sed -i -E 's|(^\sindex )|\1index.php |g' /etc/nginx/sites-enabled/default --follow-symlinks
+
+
