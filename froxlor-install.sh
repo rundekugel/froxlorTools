@@ -29,24 +29,6 @@ apt install froxlor
 echo secure database
 /usr/bin/mysql_secure_installation
 
-# -------------------------------------------------
-echo do manually:
-echo "mariadb : SET PASSWORD FOR 'root'@'localhost' = PASSWORD('new_password');"
-echo call http://<server-ip>/froxlor
-exit 0
-# -------------------------------------------------
-service nginx restart
-apt install php-7.4
-
-cat /usr/share/keyrings/deb.froxlor.org-froxlor.gpg 
-wget -O - https://deb.froxlor.org/froxlor.gpg | apt-key add -
-
-cd /etc/nginx/sites-enabled/
-ln -s ../sites-available/froxlor.conf 
-service nginx restart
-
-php /var/www/froxlor//install/scripts/config-services.php --froxlor-dir=/var/www/froxlor/ --create
-
 sed -i -e 's|root /var/www/html|root /var/www/froxlor|g' /etc/nginx/sites-enabled/default --follow-symlinks
 sed -i -e 's/#location\location/g' /etc/nginx/sites-enabled/default --follow-symlinks
 sed -i -e 's|#location ~ \\.php|location ~ \\.php|g' /etc/nginx/sites-enabled/default --follow-symlinks
@@ -54,5 +36,14 @@ sed -i -e 's|#\tinclude sni|\tinclude sni|g' /etc/nginx/sites-enabled/default --
 sed -i -e 's|#\tfastcgi_pass unix|\tfastcgi_pass unix|g' /etc/nginx/sites-enabled/default --follow-symlinks
 sed -i -z -e 's|9000;\n\t#|9000;\n\t|g' /etc/nginx/sites-enabled/default --follow-symlinks
 sed -i -E 's|(^\sindex )|\1index.php |g' /etc/nginx/sites-enabled/default --follow-symlinks
+service nginx restart
+
+# -------------------------------------------------
+echo do manually:
+echo "mariadb : SET PASSWORD FOR 'root'@'localhost' = PASSWORD('new_password');"
+echo call http://<server-ip>/froxlor
+exit 0
+# -------------------------------------------------
+
 
 
