@@ -23,7 +23,7 @@
 #SOFTWARE.
 
 
-echo Try installing froxlor...
+echo Try installing froxlor with nginx and all dependencies...
 echo This script is copyrighted by gaul1-lifesim.de. 
 
 #froxlor needs a user for php-fpm
