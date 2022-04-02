@@ -35,7 +35,7 @@ apt -y upgrade
 apt -y remove apache2
 apt -y install nginx screen mc git letsencrypt
 apt -y install php php-fpm php-mysql php-xml php-mbstring php-gd php-curl php-bcmath php-zip php-ldap php-cgi
-apt -y install mlocate
+apt -y install mlocate gnupg
 apt -y install mariadb-client mariadb-server
 updatedb
 
