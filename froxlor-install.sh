@@ -1,6 +1,34 @@
 #!/bin/bash
 
-echo try installing froxlor...
+#MIT License
+#
+#Copyright (c) 2022 gaul1-lifesim.de
+#
+#Permission is hereby granted, free of charge, to any person obtaining a copy
+#of this software and associated documentation files (the "Software"), to deal
+#in the Software without restriction, including without limitation the rights
+#to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+#copies of the Software, and to permit persons to whom the Software is
+#furnished to do so, subject to the following conditions:
+#
+#The above copyright notice and this permission notice shall be included in all
+#copies or substantial portions of the Software.
+#
+#THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+#IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+#FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+#AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+#LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+#OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+#SOFTWARE.
+
+
+echo Try installing froxlor...
+echo This script is copyrighted by gaul1-lifesim.de. 
+
+#froxlor needs a user for php-fpm
+useradd -r -G www-data customer1
+usermod -G customer1 www-data 
 
 apt update
 apt -y upgrade
@@ -42,6 +70,10 @@ service nginx restart
 echo do manually:
 echo "mariadb : SET PASSWORD FOR 'root'@'localhost' = PASSWORD('new_password');"
 echo call http://<server-ip>/froxlor
+echo add "ssl_certificate /etc/letsencrypt/live/{DOMAIN}/cert.pem;
+        ssl_certificate_key /etc/letsencrypt/live/{DOMAIN}privkey.pem;
+        "
+echo to "Eigene SSL vHost-Einstellungen"        
 exit 0
 # -------------------------------------------------
 
