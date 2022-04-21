@@ -1,0 +1,14 @@
+{
+	"mysql": {
+		"rootpasswd": "password-for-new-privileged-user-froxroot",
+		"db": "database-name",
+		"user": "unprivileged-mysql-user",
+		"userpasswd": "password-for-unprivileged-user"
+	},
+	"froxlor": {
+		"hostname": "installer-test.froxlor",
+		"ipaddr": "123.123.123.123",
+		"adminuser": "admin",
+		"adminpasswd": "froxlor-admin-password"
+	}
+}
