@@ -28,7 +28,7 @@ Example:
 	},
 	"froxlor": {
 		"hostname": "installer-test.froxlor",
-		"ipaddr": "123.123.123.123",
+		"ipaddr": "2000::1",
 		"adminuser": "admin",
 		"adminpasswd": "froxlor-admin-password"
 	}
@@ -53,3 +53,8 @@ $ ./install-froxlor.sh server-params.json froxlor-settings.json
 ```
 
 Authors: froxlor GmbH, 2022
+
+Hostname must be a valid domainname, which is reachable via Internet.
+If nameserver provides a IPV6 for the main domain, then this ip must be used for configuration, because "Let's Encrypt" uses IPv6 by default.
+
+Customer name length must be minimum 2 characters.
