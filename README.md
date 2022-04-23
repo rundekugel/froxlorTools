@@ -54,6 +54,9 @@ $ ./install-froxlor.sh server-params.json froxlor-settings.json
 
 Authors: froxlor GmbH, 2022
 
+---
+# Additional hints
+
 Hostname must be a valid domainname, which is reachable via Internet.
 If nameserver provides a IPV6 for the main domain, then this ip must be used for configuration, because "Let's Encrypt" uses IPv6 by default.
 
