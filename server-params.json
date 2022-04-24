@@ -1,14 +1,25 @@
-{
+{ 
+  "info":"change the passwords and ip adresses",
 	"mysql": {
-		"rootpasswd": "password-for-new-privileged-user-froxroot",
-		"db": "database-name",
-		"user": "unprivileged-mysql-user",
-		"userpasswd": "password-for-unprivileged-user"
+		"rootpasswd-info": "password-for-new-privileged-user-froxroot",
+		"rootpasswd": "pwdfroxroot",
+		"db-info": "database-name",
+		"db": "froxlor",
+		"user-info": "unprivileged-mysql-user",
+		"user": "froxlor",
+		"userpasswd-info": "password-for-unprivileged-user",
+		"userpasswd": "pwdfroxuser"
 	},
 	"froxlor": {
+		"hostname-info": "hostname must be reachable from internet",
 		"hostname": "installer-test.froxlor",
-		"ipaddr": "123.123.123.123",
+		"ipaddr-info": "array of ipadresses. if ipv6 available, it's mandatory for let's encrypt.",
+		"ipaddr": [
+      "116.202.110.91",
+      "2a01:4f8:c010:be0b::1"
+      ],
 		"adminuser": "admin",
-		"adminpasswd": "froxlor-admin-password"
+		"adminpasswd-info": "froxlor-admin-password",
+		"adminpasswd": "fropwdadmin"
 	}
 }

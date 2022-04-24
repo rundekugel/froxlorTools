@@ -99,8 +99,23 @@ rm /tmp/froxlor-admin.sql
 
 echo "Adding ip/port"
 echo "TRUNCATE TABLE \`panel_ipsandports\`;" > /tmp/froxlor-ipport.sql
-echo "INSERT INTO \`panel_ipsandports\` (\`ip\`, \`port\`, \`vhostcontainer\`, \`vhostcontainer_servername_statement\`) VALUES ('${froxip}', 80, 1, 1);" >> /tmp/froxlor-ipport.sql
-echo "INSERT INTO \`panel_ipsandports\` (\`ip\`, \`port\`, \`vhostcontainer\`, \`vhostcontainer_servername_statement\`, \`ssl\`) VALUES ('${froxip}', 443, 1, 1, 1);" >> /tmp/froxlor-ipport.sql
+
+n=0
+doit=1
+while [ $doit != 0 ] 
+do
+  ip=$(jq -r '.froxlor.ipaddr'[$n] $JPARAM)
+  if [ "$ip" == "null" ] 
+  then
+    doit=0
+  else
+    echo "add $ip."
+    echo "INSERT INTO \`panel_ipsandports\` (\`ip\`, \`port\`, \`vhostcontainer\`, \`vhostcontainer_servername_statement\`) VALUES ('${ip}', 80, 1, 1);" >> /tmp/froxlor-ipport.sql
+    echo "INSERT INTO \`panel_ipsandports\` (\`ip\`, \`port\`, \`vhostcontainer\`, \`vhostcontainer_servername_statement\`, \`ssl\`) VALUES ('${ip}', 443, 1, 1, 1);" >> /tmp/froxlor-ipport.sql
+  fi
+  n=$((n+1))
+done  
+
 mysql -u${mysqluser} -p${mysqlpwd} ${mysqldb} < /tmp/froxlor-ipport.sql
 rm /tmp/froxlor-ipport.sql
 
